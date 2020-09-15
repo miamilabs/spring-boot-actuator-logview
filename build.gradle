@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        springBootVersion = '1.2.1.RELEASE'
-        springLoadedVersion = '1.2.1.RELEASE'
+        springBootVersion = '2.3.3.RELEASE'
+        springLoadedVersion = '1.2.8.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -15,7 +15,7 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'spring-boot'
+//apply plugin: 'spring-boot'
 
 
 jar {
@@ -34,7 +34,7 @@ repositories {
 dependencies {
     compile project("lib")
 
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+//    testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
 

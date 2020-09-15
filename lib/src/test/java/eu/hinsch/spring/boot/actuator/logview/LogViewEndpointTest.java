@@ -419,4 +419,22 @@ public class LogViewEndpointTest {
         assertThat(file.setLastModified(modified), is(true));
     }
 
+
+
+    @Test
+    public void shouldTailHandleMoreRequestedLinesThanExist() throws Exception {
+        // given
+        createFile("file.log", "line1" + System.lineSeparator() + "line2" + System.lineSeparator(), now);
+        ByteArrayServletOutputStream outputStream = mockResponseOutputStream();
+
+        // when
+        logViewEndpoint.view("file.log", null, 3, response);
+
+        // then
+        assertThat(new String(outputStream.toByteArray()), containsString("line1"));
+        assertThat(new String(outputStream.toByteArray()), containsString("line2"));
+    }
+
+
+
 }

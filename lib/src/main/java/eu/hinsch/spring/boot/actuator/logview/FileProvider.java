@@ -16,7 +16,7 @@ public interface FileProvider {
 
     void streamContent(Path folder, String filename, OutputStream stream) throws IOException;
 
-    default void tailContent(Path folder, String filename, OutputStream stream, int lines) throws IOException {
+    default void tailContent(Path folder, String filename, OutputStream stream, int lines,String searchText) throws IOException {
         throw new UnsupportedOperationException("by default no tailing possible");
     }
 }

@@ -1,12 +1,8 @@
 management:
-  context-path: /manage
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 logging:
-  path: /tmp/log
-#  file: /tmp/log/custom.log
-
-#endpoints:
-#  logview:
-#    stylesheets:
-#      - http://foo.bar
-#      - http://bar.foo
-#    path: /tmp/log
+  file:
+    path: /var/log/spring

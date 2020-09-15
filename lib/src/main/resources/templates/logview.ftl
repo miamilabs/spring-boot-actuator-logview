@@ -36,9 +36,9 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th><a href="?sortBy=FILENAME<#if sortBy == 'FILENAME' && desc == false>&desc=true</#if>&base=${base}">Name</a></th>
-                            <th><a href="?sortBy=SIZE<#if sortBy == 'SIZE' && desc == false>&desc=true</#if>&base=${base}">Size</a></th>
-                            <th><a href="?sortBy=MODIFIED<#if sortBy == 'MODIFIED' && desc == false>&desc=true</#if>&base=${base}">Modified</a></th>
+                            <th><a href="?sortBy=FILENAME<#if sortBy?has_content && sortBy == 'FILENAME' && desc == false>&desc=true</#if>&base=${base}">Name</a></th>
+                            <th><a href="?sortBy=SIZE<#if sortBy?has_content && sortBy == 'SIZE' && desc == false>&desc=true</#if>&base=${base}">Size</a></th>
+                            <th><a href="?sortBy=MODIFIED<#if sortBy?has_content && sortBy == 'MODIFIED' && desc == false>&desc=true</#if>&base=${base}">Modified</a></th>
                         </tr>
                     </thead>
                     <#if base != "">
