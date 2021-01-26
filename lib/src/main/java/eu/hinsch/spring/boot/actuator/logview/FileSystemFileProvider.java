@@ -83,8 +83,8 @@ public class FileSystemFileProvider extends AbstractFileProvider {
                     Stream.generate(() -> readLine(reader, searchText)),
                     Objects::nonNull)
                     .limit(lines)
+                    .filter(line -> !line.equals(""))
                     .collect(LinkedList::new, LinkedList::addFirst, LinkedList::addAll);
-
             IOUtils.writeLines(content, System.lineSeparator(), stream);
         }
     }
@@ -93,10 +93,11 @@ public class FileSystemFileProvider extends AbstractFileProvider {
         try {
             String text = reader.readLine();
             if (searchText != null) {
-                if (text.contains(searchText)) {
+                if (text.toLowerCase()
+                        .contains(searchText.toLowerCase())) {
                     return text;
                 }
-                return null;
+                return "";
             }
             return text;
         } catch (IOException e) {

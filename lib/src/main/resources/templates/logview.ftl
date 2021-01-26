@@ -63,9 +63,9 @@
                                 </#if>
                                 &nbsp;
                                 <#if file.fileType == 'FILE'>
-                                    <a href="view?filename=${file.filename}&base=${base}">${file.displayFilename}</a>&nbsp;
+                                    <a href="log-view/view?filename=${file.filename}&base=${base}">${file.displayFilename}</a>&nbsp;
                                     <#if !base?ends_with(".tar.gz") && !base?ends_with(".zip")>
-                                    <a href="view?filename=${file.filename}&base=${base}&tailLines=50" title="Download last 50 lines"><i class="fa fa-angle-double-down"></i></a>
+                                    <a href="log-view/view?filename=${file.filename}&base=${base}&tailLines=50" title="Download last 50 lines"><i class="fa fa-angle-double-down"></i></a>
                                     </#if>
                                 </#if>
                                 <#if file.fileType == 'ARCHIVE'>
