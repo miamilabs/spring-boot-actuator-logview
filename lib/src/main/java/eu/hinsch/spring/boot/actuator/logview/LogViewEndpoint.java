@@ -54,9 +54,9 @@ public class LogViewEndpoint {
                        @Nullable SortBy sortBy,
                        @Nullable boolean desc,
                        @Nullable String base) throws IOException, TemplateException {
-        securityCheck(base);
 
         Path currentFolder = loggingPath(base);
+        securityCheck(currentFolder, null);
 
         List<FileEntry> files = getFileProvider(currentFolder).getFileEntries(currentFolder);
         List<FileEntry> sortedFiles = sortFiles(files, sortBy, desc);
@@ -117,7 +117,7 @@ public class LogViewEndpoint {
                     comparator = Comparator.comparing(FileEntry::getFilename);
                     break;
             }
-        }else{
+        } else {
             comparator = Comparator.comparing(FileEntry::getFilename);
         }
 
@@ -137,11 +137,11 @@ public class LogViewEndpoint {
                      @RequestParam(required = false) Integer tailLines,
                      @RequestParam(required = false) String searchText,
                      HttpServletResponse response) throws IOException {
-        securityCheck(filename);
-        response.setContentType(MediaType.TEXT_PLAIN_VALUE);
 
         Path path = loggingPath(base);
         FileProvider fileProvider = getFileProvider(path);
+        securityCheck(path, filename);
+        response.setContentType(MediaType.TEXT_PLAIN_VALUE);
         if (tailLines != null) {
             fileProvider.tailContent(path, filename, response.getOutputStream(), tailLines, searchText);
         } else {
@@ -183,9 +183,17 @@ public class LogViewEndpoint {
         }
     }
 
-    private void securityCheck(String filename) {
-        Assert.doesNotContain(filename, "..");
+    private void securityCheck(Path base, String filename) {
+        try {
+            String canonicalLoggingPath = (filename != null ? new File(base.toFile()
+                    .toString(), filename) : new File(base.toFile()
+                    .toString())).getCanonicalPath();
+            String baseCanonicalPath = new File(loggingPath).getCanonicalPath();
+            String errorMessage = "File " + base.toString() + "/" + filename + " may not be located outside base path " + loggingPath;
+            Assert.isTrue(canonicalLoggingPath.startsWith(baseCanonicalPath), errorMessage);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
-
 
 }
